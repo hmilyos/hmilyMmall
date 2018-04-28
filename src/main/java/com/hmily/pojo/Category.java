@@ -1,7 +1,29 @@
 package com.hmily.pojo;
 
+import lombok.Setter;
+import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Date;
 
+//@Getter(AccessLevel.PROTECTED)  //设置生成的get方法的作用域，默认是public
+@Getter
+@Setter
+//@Setter(AccessLevel.PRIVATE)  //设置生成的set方法的作用域，默认是public
+@NoArgsConstructor  //无参构造器
+@AllArgsConstructor //所以参数的构造器
+//@Data   //包括了get、set、ToString、EqualsAndHashCode
+//@ToString
+//@ToString(exclude = "name") //toString时排除掉name这个字段属性
+//@EqualsAndHashCode(of = "id")   //重新EqualsAndHashCode方法, id相同就认为是相同的
+//@EqualsAndHashCode(of = {"id", "name"})   //重新EqualsAndHashCode方法, id、name相同就认为是相同的
+//@EqualsAndHashCode(exclude = "name")   //重新EqualsAndHashCode方法，比较时排除name字段
+//@EqualsAndHashCode(exclude = {"name", "status"})   //重新EqualsAndHashCode方法，比较时排除name、status字段
+//@Slf4j  //logback日志，可在类中直接使用log，不需要声明
+//@Log4j    //log4j日志，可在类中直接使用log，不需要声明
 public class Category {
     private Integer id;
 
@@ -17,73 +39,4 @@ public class Category {
 
     private Date updateTime;
 
-    public Category(Integer id, Integer parentId, String name, Boolean status, Integer sortOrder, Date createTime, Date updateTime) {
-        this.id = id;
-        this.parentId = parentId;
-        this.name = name;
-        this.status = status;
-        this.sortOrder = sortOrder;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
-
-    public Category() {
-        super();
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public Integer getSortOrder() {
-        return sortOrder;
-    }
-
-    public void setSortOrder(Integer sortOrder) {
-        this.sortOrder = sortOrder;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }
