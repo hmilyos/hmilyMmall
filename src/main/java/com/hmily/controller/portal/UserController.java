@@ -25,7 +25,6 @@ public class UserController {
     @RequestMapping(value = "getInformation.do", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<User> getInformation(Integer id){
-        log.info("getInformation--id==" + id);
         if(id == null){
             return  ServerResponse.createByErrorMessage("id不能为空！");
         }
@@ -47,6 +46,12 @@ public class UserController {
     @ResponseBody
     public ServerResponse<String> register(User user){
         return  iUserService.register(user);
+    }
+
+    @RequestMapping(value = "checkValid.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> checkValid(String str, String type){
+        return iUserService.checkValid(str, type);
     }
 
 }
