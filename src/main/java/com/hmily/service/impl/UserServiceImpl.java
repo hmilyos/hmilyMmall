@@ -38,7 +38,6 @@ public class UserServiceImpl implements IUserService {
         }
 
         user.setPassword(StringUtils.EMPTY);
-        log.info(user.toString());
         return ServerResponse.createBySuccess(user);
     }
 
