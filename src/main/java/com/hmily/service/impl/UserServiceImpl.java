@@ -203,6 +203,9 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServerResponse checkAdminRole(User user) {
-        return null;
+        if(null != user && user.getRole().intValue() == Const.Role.ROLE_ADMIN){
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
     }
 }
