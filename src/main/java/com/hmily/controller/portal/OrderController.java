@@ -128,7 +128,7 @@ public class OrderController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         String path = request.getSession().getServletContext().getRealPath("upload");
-        return iOrderService.pay(orderNo,user.getId(), path);
+        return iOrderService.pay(orderNo, user.getId(), path);
     }
 
     /**
