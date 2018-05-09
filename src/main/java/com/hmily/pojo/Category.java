@@ -1,11 +1,6 @@
 package com.hmily.pojo;
 
-import lombok.Setter;
-import lombok.Getter;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
+import lombok.*;
 
 import java.util.Date;
 
@@ -14,7 +9,7 @@ import java.util.Date;
 @Setter
 //@Setter(AccessLevel.PRIVATE)  //设置生成的set方法的作用域，默认是public
 @NoArgsConstructor  //无参构造器
-@AllArgsConstructor //所以参数的构造器
+@AllArgsConstructor //所有参数的构造器
 //@Data   //包括了get、set、ToString、EqualsAndHashCode
 //@ToString
 //@ToString(exclude = "name") //toString时排除掉name这个字段属性
@@ -24,6 +19,7 @@ import java.util.Date;
 //@EqualsAndHashCode(exclude = {"name", "status"})   //重新EqualsAndHashCode方法，比较时排除name、status字段
 //@Slf4j  //logback日志，可在类中直接使用log，不需要声明
 //@Log4j    //log4j日志，可在类中直接使用log，不需要声明
+@EqualsAndHashCode(of = "id")
 public class Category {
     private Integer id;
 
