@@ -1,17 +1,24 @@
 package com.hmily.util;
 
 
+import com.google.common.collect.Lists;
 import com.hmily.pojo.TestPojo;
+import com.hmily.pojo.User;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.codehaus.jackson.type.JavaType;
 import org.codehaus.jackson.type.TypeReference;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class JsonUtil {
@@ -80,71 +87,71 @@ public class JsonUtil {
         }
     }
 
-    public static <T> T stringToObj(String str, Class<?> collectionClass, Class<T>... elementClasses){
-        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);
+    public static <T> T stringToObj(String str,Class<?> collectionClass,Class<?>... elementClasses){
+        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(collectionClass,elementClasses);
         try {
-            return objectMapper.readValue(str, javaType);
-        } catch (IOException e) {
-            log.warn("Parse String to Object error", e);
+            return objectMapper.readValue(str,javaType);
+        } catch (Exception e) {
+            log.warn("Parse String to Object error",e);
             return null;
         }
     }
 
     public static void main(String[] args) {
         TestPojo testPojo = new TestPojo();
-        testPojo.setName("Geely");
+        testPojo.setName("hmily");
         testPojo.setId(666);
 
-        //{"name":"Geely","id":666}
-        String json = "{\"name\":\"Geely\",\"color\":\"blue\",\"id\":666}";
+        //{"name":"hmily","id":666}
+        String json = "{\"name\":\"hmily\",\"color\":\"blue\",\"id\":666}";
         TestPojo testPojoObject = JsonUtil.stringToObj(json,TestPojo.class);
-//        String testPojoJson = JsonUtil.obj2String(testPojo);
+        String testPojoJson = JsonUtil.objToString(testPojo);
 //        log.info("testPojoJson:{}",testPojoJson);
 
         log.info("end");
 
-//        User user = new User();
-//        user.setId(2);
-//        user.setEmail("geely@happymmall.com");
-//        user.setCreateTime(new Date());
-//        String userJsonPretty = JsonUtil.obj2StringPretty(user);
-//        log.info("userJson:{}",userJsonPretty);
+        User user = new User();
+        user.setId(2);
+        user.setEmail("admin@hmilymmall.com");
+        user.setCreateTime(new Date());
+        String userJsonPretty = JsonUtil.objToStringPretty(user);
+        log.info("userJson:{}",userJsonPretty);
 
 
-//        User u2 = new User();
-//        u2.setId(2);
-//        u2.setEmail("geelyu2@happymmall.com");
-//
-//
-//
-//        String user1Json = JsonUtil.obj2String(u1);
-//
-//        String user1JsonPretty = JsonUtil.obj2StringPretty(u1);
-//
-//        log.info("user1Json:{}",user1Json);
-//
-//        log.info("user1JsonPretty:{}",user1JsonPretty);
-//
-//
-//        User user = JsonUtil.string2Obj(user1Json,User.class);
-//
-//
-//        List<User> userList = Lists.newArrayList();
-//        userList.add(u1);
-//        userList.add(u2);
-//
-//        String userListStr = JsonUtil.obj2StringPretty(userList);
-//
-//        log.info("==================");
-//
-//        log.info(userListStr);
-//
-//
-//        List<User> userListObj1 = JsonUtil.string2Obj(userListStr, new TypeReference<List<User>>() {
-//        });
-//
-//
-//        List<User> userListObj2 = JsonUtil.string2Obj(userListStr,List.class,User.class);
+        User u2 = new User();
+        u2.setId(2);
+        u2.setEmail("geelyu2@happymmall.com");
+
+
+
+        String user1Json = JsonUtil.objToString(user);
+
+        String user1JsonPretty = JsonUtil.objToStringPretty(u2);
+
+        log.info("user1Json:{}",user1Json);
+
+        log.info("user1JsonPretty:{}",user1JsonPretty);
+
+
+        User u1 = (User)JsonUtil.stringToObj(user1Json,User.class);
+
+
+        List<User> userList = Lists.newArrayList();
+        userList.add(u1);
+        userList.add(u2);
+
+        String userListStr = JsonUtil.objToStringPretty(userList);
+
+        log.info("==================");
+
+        log.info(userListStr);
+
+
+        List<User> userListObj1 = JsonUtil.stringToObj(userListStr, new TypeReference<List<User>>() {
+        });
+
+
+        List<User> userListObj2 = JsonUtil.stringToObj(userListStr, List.class, User.class);
 
         System.out.println("end");
     }
