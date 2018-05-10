@@ -323,9 +323,9 @@
   <profiles>
     <profile>
       <id>dev0</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+        </activation>
       <properties>
         <deploy.type>dev0</deploy.type>
       </properties>
