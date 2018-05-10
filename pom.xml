@@ -252,7 +252,6 @@
       <version>1.16.18</version>
     </dependency>
 
-
   </dependencies>
 
   <build>
@@ -282,5 +281,49 @@
         </configuration>
       </plugin>
     </plugins>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources.${deploy.type}</directory>
+        <excludes>
+          <exclude>*.jsp</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+
   </build>
+
+  <profiles>
+    <profile>
+      <id>dev0</id>
+      <properties>
+        <deploy.type>dev0</deploy.type>
+      </properties>
+    </profile>
+    <profile>
+      <id>dev3</id>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+        </activation>
+      <properties>
+        <deploy.type>dev3</deploy.type>
+      </properties>
+    </profile>
+    <profile>
+      <id>beta</id>
+      <properties>
+        <deploy.type>beta</deploy.type>
+      </properties>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <properties>
+        <deploy.type>prod</deploy.type>
+      </properties>
+    </profile>
+  </profiles>
+
 </project>
