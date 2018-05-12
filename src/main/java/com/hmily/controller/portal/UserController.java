@@ -9,6 +9,7 @@ import com.hmily.util.CookieUtil;
 import com.hmily.util.JsonUtil;
 import com.hmily.util.RedisPoolUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -73,8 +74,17 @@ public class UserController {
 
     @RequestMapping(value = "get_user_info", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<User> getUserInfo(HttpSession session){
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<User> getUserInfo(HttpSession session, HttpServletRequest request){
+//        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        String key = CookieUtil.readLoginToken(request);
+        if(StringUtils.isBlank(key)){
+            return ServerResponse.createByErrorMessage("当前用户未登录");
+        }
+        String str = RedisPoolUtil.get(key);
+        if(StringUtils.isBlank(str)){
+            return ServerResponse.createByErrorMessage("当前用户未登录");
+        }
+        User user = JsonUtil.stringToObj(str, User.class);
         if(null == user){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
