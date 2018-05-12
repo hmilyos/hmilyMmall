@@ -72,7 +72,7 @@ public class UserController {
         return ServerResponse.createBySuccessMessage("退出成功");
     }
 
-    @RequestMapping(value = "get_user_info", method = RequestMethod.GET)
+    @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session, HttpServletRequest request){
 //        User user = (User)session.getAttribute(Const.CURRENT_USER);
@@ -91,19 +91,19 @@ public class UserController {
         return ServerResponse.createBySuccess(user);
     }
 
-    @RequestMapping(value = "forget_get_question", method = RequestMethod.POST)
+    @RequestMapping(value = "forget_get_question.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetGetQuestion(String username){
         return iUserService.forgetGetQuestion(username);
     }
 
-    @RequestMapping(value = "forget_check_answer", method = RequestMethod.POST)
+    @RequestMapping(value = "forget_check_answer.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer){
         return iUserService.checkAnswer(username, question, answer);
     }
 
-    @RequestMapping(value = "forget_rest_password", method = RequestMethod.POST)
+    @RequestMapping(value = "forget_rest_password.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetRestPassword(String username, String passwordNew, String forgetToken){
         return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
