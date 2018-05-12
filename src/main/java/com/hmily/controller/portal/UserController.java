@@ -41,12 +41,11 @@ public class UserController {
 
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> login(String username, String password, HttpSession session, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest){
+    public ServerResponse<User> login(String username, String password, HttpSession session, HttpServletResponse httpServletResponse){
 //        public ServerResponse<User> login(@RequestBody String username, @RequestBody String password, HttpSession session){
 
-            ServerResponse<User> res = iUserService.login(username, password);
+        ServerResponse<User> res = iUserService.login(username, password);
         if(res.isSuccess()) {
-//            session.setAttribute(Const.CURRENT_USER, res.getData());
             CookieUtil.writeLoginToken(httpServletResponse, session.getId());
             RedisPoolUtil.setEx(session.getId(), JsonUtil.objToString(res.getData()), Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
         }
@@ -67,8 +66,10 @@ public class UserController {
 
     @RequestMapping(value = "logout.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> logout(HttpSession session){
-        session.removeAttribute(Const.CURRENT_USER);
+    public ServerResponse<String> logout(HttpServletRequest request, HttpServletResponse response){
+        String loginToken = CookieUtil.readLoginToken(request);
+        CookieUtil.delLoginToken(request, response);
+        RedisPoolUtil.del(loginToken);
         return ServerResponse.createBySuccessMessage("退出成功");
     }
 
@@ -80,11 +81,8 @@ public class UserController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String str = RedisPoolUtil.get(key);
-        if(StringUtils.isBlank(str)){
-            return ServerResponse.createByErrorMessage("当前用户未登录");
-        }
-        User user = JsonUtil.stringToObj(str, User.class);
+        String userInfoStr = RedisPoolUtil.get(key);
+        User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if(null == user){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
