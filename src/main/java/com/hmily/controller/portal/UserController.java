@@ -5,13 +5,19 @@ import com.hmily.common.ResponseCode;
 import com.hmily.common.ServerResponse;
 import com.hmily.pojo.User;
 import com.hmily.service.IUserService;
+import com.hmily.util.CookieUtil;
+import com.hmily.util.JsonUtil;
+import com.hmily.util.RedisPoolUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -34,10 +40,16 @@ public class UserController {
 
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> login(String username, String password, HttpSession session){
-        ServerResponse<User> res = iUserService.login(username, password);
+    public ServerResponse<User> login(String username, String password, HttpSession session, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest){
+//        public ServerResponse<User> login(@RequestBody String username, @RequestBody String password, HttpSession session){
+
+            ServerResponse<User> res = iUserService.login(username, password);
         if(res.isSuccess()) {
-            session.setAttribute(Const.CURRENT_USER, res.getData());
+//            session.setAttribute(Const.CURRENT_USER, res.getData());
+            CookieUtil.writeLoginToken(httpServletResponse, session.getId());
+            CookieUtil.readLoginToken(httpServletRequest);
+            CookieUtil.delLoginToken(httpServletRequest, httpServletResponse);
+            RedisPoolUtil.setEx(session.getId(), JsonUtil.objToString(res.getData()), Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
         }
         return res;
     }
