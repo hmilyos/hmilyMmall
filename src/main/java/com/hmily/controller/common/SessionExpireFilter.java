@@ -4,7 +4,7 @@ import com.hmily.common.Const;
 import com.hmily.pojo.User;
 import com.hmily.util.CookieUtil;
 import com.hmily.util.JsonUtil;
-import com.hmily.util.RedisPoolUtil;
+import com.hmily.util.RedisShardedPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.*;
@@ -26,10 +26,10 @@ public class SessionExpireFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         if(StringUtils.isNotBlank(loginToken)){
-            String userStr = RedisPoolUtil.get(loginToken);
+            String userStr = RedisShardedPoolUtil.get(loginToken);
             User user = JsonUtil.stringToObj(userStr, User.class);
             if(user != null){
-                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         chain.doFilter(request, response);

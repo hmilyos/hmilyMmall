@@ -8,7 +8,7 @@ import com.hmily.service.ICategoryService;
 import com.hmily.service.IUserService;
 import com.hmily.util.CookieUtil;
 import com.hmily.util.JsonUtil;
-import com.hmily.util.RedisPoolUtil;
+import com.hmily.util.RedisShardedPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,7 @@ public class CategoryManageController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if(null == user){
             return ServerResponse.createByErrorMessage("请登录");
@@ -57,7 +57,7 @@ public class CategoryManageController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if(null == user){
             return ServerResponse.createByErrorMessage("请登录");
@@ -77,7 +77,7 @@ public class CategoryManageController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if(null == user){
             return ServerResponse.createByErrorMessage("请登录");
@@ -97,7 +97,7 @@ public class CategoryManageController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if(null == user){
             return ServerResponse.createByErrorMessage("请登录");

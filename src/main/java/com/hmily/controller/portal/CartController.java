@@ -7,7 +7,7 @@ import com.hmily.pojo.User;
 import com.hmily.service.ICartService;
 import com.hmily.util.CookieUtil;
 import com.hmily.util.JsonUtil;
-import com.hmily.util.RedisPoolUtil;
+import com.hmily.util.RedisShardedPoolUtil;
 import com.hmily.vo.CartVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class CartController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -46,7 +46,7 @@ public class CartController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -62,7 +62,7 @@ public class CartController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -77,7 +77,7 @@ public class CartController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -92,7 +92,7 @@ public class CartController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -107,7 +107,7 @@ public class CartController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -122,7 +122,7 @@ public class CartController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -137,7 +137,7 @@ public class CartController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -152,7 +152,7 @@ public class CartController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if (user == null) {
             return ServerResponse.createBySuccess(0);

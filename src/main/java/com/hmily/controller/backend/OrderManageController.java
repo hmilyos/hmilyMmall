@@ -9,7 +9,7 @@ import com.hmily.service.IOrderService;
 import com.hmily.service.IUserService;
 import com.hmily.util.CookieUtil;
 import com.hmily.util.JsonUtil;
-import com.hmily.util.RedisPoolUtil;
+import com.hmily.util.RedisShardedPoolUtil;
 import com.hmily.vo.OrderVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class OrderManageController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
@@ -60,7 +60,7 @@ public class OrderManageController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
@@ -82,7 +82,7 @@ public class OrderManageController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
@@ -103,7 +103,7 @@ public class OrderManageController {
         if(StringUtils.isBlank(key)){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
-        String userInfoStr = RedisPoolUtil.get(key);
+        String userInfoStr = RedisShardedPoolUtil.get(key);
         User user = JsonUtil.stringToObj(userInfoStr, User.class);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
