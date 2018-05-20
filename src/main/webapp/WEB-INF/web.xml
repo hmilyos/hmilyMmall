@@ -34,7 +34,7 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
 -->
-
+    <!--为了restful所以要把*.do改成/-->
     <filter-mapping>
         <filter-name>sessionExpireFilter</filter-name>
         <url-pattern>/</url-pattern>
@@ -68,10 +68,16 @@
 
 
 
-  <servlet-mapping>
+<!--  <servlet-mapping>
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>*.do</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>-->
+
+    <!--为了restful所以要把*.do改成/-->
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
 </web-app>
 
