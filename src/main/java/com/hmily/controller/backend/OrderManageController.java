@@ -35,42 +35,14 @@ public class OrderManageController {
     @ResponseBody
     public ServerResponse<PageInfo> orderList(HttpServletRequest request, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
                                               @RequestParam(value = "pageSize",defaultValue = "10")int pageSize){
-        String key = CookieUtil.readLoginToken(request);
-        if(StringUtils.isBlank(key)){
-            return ServerResponse.createByErrorMessage("当前用户未登录");
-        }
-        String userInfoStr = RedisShardedPoolUtil.get(key);
-        User user = JsonUtil.stringToObj(userInfoStr, User.class);
-        if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-
-        }
-        if(iUserService.checkAdminRole(user).isSuccess()){
-            return iOrderService.manageList(pageNum,pageSize);
-        }else{
-            return ServerResponse.createByErrorMessage("无权限操作");
-        }
+        return iOrderService.manageList(pageNum,pageSize);
     }
 
 
     @RequestMapping("detail.do")
     @ResponseBody
     public ServerResponse<OrderVo> orderDetail(HttpServletRequest request, Long orderNo){
-        String key = CookieUtil.readLoginToken(request);
-        if(StringUtils.isBlank(key)){
-            return ServerResponse.createByErrorMessage("当前用户未登录");
-        }
-        String userInfoStr = RedisShardedPoolUtil.get(key);
-        User user = JsonUtil.stringToObj(userInfoStr, User.class);
-        if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-
-        }
-        if(iUserService.checkAdminRole(user).isSuccess()){
-            return iOrderService.manageDetail(orderNo);
-        }else{
-            return ServerResponse.createByErrorMessage("无权限操作");
-        }
+        return iOrderService.manageDetail(orderNo);
     }
 
 
@@ -78,43 +50,15 @@ public class OrderManageController {
     @ResponseBody
     public ServerResponse<PageInfo> orderSearch(HttpServletRequest request, Long orderNo,@RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
                                                 @RequestParam(value = "pageSize",defaultValue = "10")int pageSize){
-        String key = CookieUtil.readLoginToken(request);
-        if(StringUtils.isBlank(key)){
-            return ServerResponse.createByErrorMessage("当前用户未登录");
-        }
-        String userInfoStr = RedisShardedPoolUtil.get(key);
-        User user = JsonUtil.stringToObj(userInfoStr, User.class);
-        if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-
-        }
-        if(iUserService.checkAdminRole(user).isSuccess()){
-            //这里的搜索是有问题的，应该可以根据订单号进行模糊搜索！！！
-            return iOrderService.manageSearch(orderNo, pageNum, pageSize);
-        }else{
-            return ServerResponse.createByErrorMessage("无权限操作");
-        }
+           //这里的搜索是有问题的，应该可以根据订单号进行模糊搜索！！！
+        return iOrderService.manageSearch(orderNo, pageNum, pageSize);
     }
 
     @RequestMapping("send_goods.do")
     @ResponseBody
     public ServerResponse<String> orderSendGoods(HttpServletRequest request, Long orderNo){
-        String key = CookieUtil.readLoginToken(request);
-        if(StringUtils.isBlank(key)){
-            return ServerResponse.createByErrorMessage("当前用户未登录");
-        }
-        String userInfoStr = RedisShardedPoolUtil.get(key);
-        User user = JsonUtil.stringToObj(userInfoStr, User.class);
-        if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-
-        }
-        if(iUserService.checkAdminRole(user).isSuccess()){
-            //填充我们增加产品的业务逻辑
-            return iOrderService.manageSendGoods(orderNo);
-        }else{
-            return ServerResponse.createByErrorMessage("无权限操作");
-        }
+        //填充我们增加产品的业务逻辑
+        return iOrderService.manageSendGoods(orderNo);
     }
 
 
