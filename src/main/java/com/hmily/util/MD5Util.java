@@ -58,4 +58,13 @@ public class MD5Util {
         String password = MD5EncodeUtf8("password");
         log.info("password---" + password);
     }
+
+    public static String test(){
+        try {
+            throw new ArithmeticException("util");
+        } catch (EnumConstantNotPresentException e) {
+            log.error("{}", e.getMessage());
+        }
+        return "util";
+    }
 }

@@ -209,4 +209,15 @@ public class UserServiceImpl implements IUserService {
         }
         return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
     }
+
+    @Override
+    public String test(){
+        try {
+            String test = MD5Util.test();
+            throw new NoSuchFieldException("iservice: ");
+        } catch (NoSuchFieldException e) {
+           log.error("iservice: {}", e.getMessage());
+        }
+        return "iservice";
+    }
 }

@@ -15,6 +15,7 @@ public class ExceptionResolver {
 
     @ResponseBody
     public ServerResponse handle(HttpServletRequest request, Exception e) {
+        e.getMessage();
         log.error("{} Exception", request.getRequestURI(), e);
         return ServerResponse.createByErrorCodeMessage(ResponseCode.ERROR.getCode(),
                 "服务器内部错误",  e.toString());

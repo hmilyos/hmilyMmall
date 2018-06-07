@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/user/")
@@ -28,6 +29,17 @@ public class UserController {
 
     @Autowired
     private IUserService iUserService;
+
+    @RequestMapping("test.do")
+    @ResponseBody
+    public void test() {
+        try {
+            iUserService.test();
+            throw  new SQLException("hehheh");
+        } catch (SQLException e) {
+           log.error("test: {}", e);
+        }
+    }
 
     @RequestMapping(value = "getInformation.do", method = RequestMethod.GET)
     @ResponseBody
