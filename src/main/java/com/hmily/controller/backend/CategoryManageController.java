@@ -40,7 +40,11 @@ public class CategoryManageController {
         }
     }
 
+<<<<<<< HEAD
     @RequestMapping(value = "set_categoryName", method = RequestMethod.POST)
+=======
+    @RequestMapping(value = "set_category_name", method = RequestMethod.POST)
+>>>>>>> a17d6b45672dba87375b39b6e50df9b7d462ee10
     @ResponseBody
     public ServerResponse setCategoryName(HttpSession session, Integer categoryId, String categoryName) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);

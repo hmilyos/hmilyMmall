@@ -127,4 +127,11 @@ public class UserController {
         }
         return ServerResponse.createBySuccess(user);
     }
+
+    @RequestMapping(value = "test_time.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse testTime(){
+        return iUserService.testTime();
+    }
+
 }

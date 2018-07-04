@@ -183,4 +183,8 @@
   <select id="checkPassword" parameterType="map" resultType="int">
     select count(1) from mmall_user where id = #{id} and password = #{password}
   </select>
+
+    <select id="getByTime" resultMap="BaseResultMap" parameterType="string">
+        select <include refid="Base_Column_List" /> from mmall_user where create_time between #{startTime} and now();
+    </select>
 </mapper>

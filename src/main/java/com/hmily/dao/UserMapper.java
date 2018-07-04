@@ -3,6 +3,9 @@ package com.hmily.dao;
 import com.hmily.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -31,4 +34,6 @@ public interface UserMapper {
     int updatePasswordByUsername(@Param("username")String username, @Param("password")String password);
 
     int checkPassword(@Param("password") String password, @Param("id") Integer id);
+
+    List<User> getByTime(String startTime);
 }
