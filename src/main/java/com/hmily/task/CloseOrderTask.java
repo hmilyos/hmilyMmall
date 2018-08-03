@@ -5,6 +5,7 @@ import com.hmily.common.RedissonManager;
 import com.hmily.service.IOrderService;
 import com.hmily.util.PropertiesUtil;
 import com.hmily.util.RedisShardedPoolUtil;
+import com.hmily.util.curator.DistributedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.redisson.api.RLock;
@@ -24,6 +25,9 @@ public class CloseOrderTask {
 
     @Autowired
     private RedissonManager redissonManager;
+
+    @Autowired
+    private DistributedLock distributedLock;
 
     @PreDestroy
     public void delLock(){
@@ -84,7 +88,7 @@ public class CloseOrderTask {
         log.info("关闭订单定时任务结束");
     }
 
-    @Scheduled(cron="0 */1 * * * ?")
+//    @Scheduled(cron="0 */1 * * * ?")
     public void closeOrderTaskV4(){
         RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
         boolean getLock = false;
@@ -108,6 +112,25 @@ public class CloseOrderTask {
         }
     }
 
+
+    @Scheduled(cron="0 */1 * * * ?")
+    public void closeOrderTaskV5(){
+        boolean getLock = distributedLock.canGetLock();
+        log.info("获得锁：{}", getLock ? "成功": "失败");
+        if(getLock){
+            int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","2"));
+//            iOrderService.closeOrder(hour);
+            // 模拟处理业务需要3秒
+            try {
+                Thread.sleep(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                distributedLock.releaseLock();
+            }
+            distributedLock.releaseLock();
+        }
+        return;
+    }
 
 
 
